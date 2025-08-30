@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { ElevenLabsConversation } from '@/components/ElevenLabsConversation';
+import { VoiceConversationDemo } from '@/components/VoiceConversationDemo';
 import { ConversationScreen } from '@/components/ConversationScreen';
 import { PreferencesScreen } from '@/components/PreferencesScreen';
 import { PodcastScreen } from '@/components/PodcastScreen';
 import { Button } from '@/components/ui/button';
 
-type AppState = 'elevenlabs' | 'conversation' | 'preferences' | 'podcast';
+type AppState = 'voice' | 'conversation' | 'preferences' | 'podcast';
 
 interface UserData {
   username: string;
@@ -27,7 +27,7 @@ interface CompleteData {
 }
 
 const Index = () => {
-  const [currentScreen, setCurrentScreen] = useState<AppState>('elevenlabs');
+  const [currentScreen, setCurrentScreen] = useState<AppState>('voice');
   const [userData, setUserData] = useState<UserData>({ username: '', topic: '' });
   const [preferences, setPreferences] = useState<Preferences>({ 
     style: '', 
@@ -35,8 +35,8 @@ const Index = () => {
     mood: '' 
   });
 
-  // Handle ElevenLabs conversation completion with all data
-  const handleElevenLabsComplete = (data: CompleteData) => {
+  // Handle voice conversation completion with all data
+  const handleVoiceComplete = (data: CompleteData) => {
     setUserData({ username: data.username, topic: data.topic });
     setPreferences({ style: data.style, duration: data.duration, mood: data.mood });
     setCurrentScreen('podcast');
@@ -58,9 +58,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {currentScreen === 'elevenlabs' && (
+      {currentScreen === 'voice' && (
         <div className="relative">
-          <ElevenLabsConversation onDataCollected={handleElevenLabsComplete} />
+          <VoiceConversationDemo onComplete={handleVoiceComplete} />
           
           {/* Fallback option */}
           <div className="absolute top-4 right-4">
